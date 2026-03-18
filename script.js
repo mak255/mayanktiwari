@@ -52,7 +52,7 @@ navMenu.addEventListener('click', (e) => {
 
 // ===== SCROLL-REVEAL ANIMATION =====
 const revealElements = document.querySelectorAll(
-  '.skill-category, .project-card, .timeline-item, .highlight-card, .about-text, .contact-form'
+  '.skill-category, .project-card, .timeline-item, .highlight-card, .about-text, .contact-card'
 );
 
 // Add the reveal class
@@ -71,29 +71,6 @@ const revealObserver = new IntersectionObserver(
 );
 
 revealElements.forEach((el) => revealObserver.observe(el));
-
-// ===== CONTACT FORM (basic client-side handling) =====
-const contactForm = document.getElementById('contact-form');
-
-contactForm.addEventListener('submit', (e) => {
-  // If no real form backend is configured, prevent default and show a message
-  const action = contactForm.getAttribute('action');
-  if (!action || action.includes('YOUR_FORM_ID')) {
-    e.preventDefault();
-    const btn = contactForm.querySelector('button[type="submit"]');
-    btn.textContent = 'Thanks! ✓';
-    btn.disabled = true;
-    btn.style.opacity = '0.7';
-
-    // Reset after 3 seconds
-    setTimeout(() => {
-      btn.textContent = 'Send Message';
-      btn.disabled = false;
-      btn.style.opacity = '1';
-      contactForm.reset();
-    }, 3000);
-  }
-});
 
 // ===== SMOOTH SCROLL for Safari fallback =====
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
