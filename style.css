@@ -783,3 +783,132 @@ img {
     font-size: 2.75rem;
   }
 }
+
+/* ===== BLOG ARTICLE ===== */
+.blog-article {
+  padding-top: 100px;
+  padding-bottom: 4rem;
+  min-height: 100vh;
+}
+
+.blog-header {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.blog-back {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-accent);
+  margin-bottom: 1.5rem;
+  transition: color var(--transition);
+}
+
+.blog-back:hover {
+  color: var(--color-accent-hover);
+}
+
+.blog-header h1 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.blog-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.blog-meta-item {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.blog-header .project-tags {
+  margin-top: 0.5rem;
+}
+
+.blog-section {
+  margin-bottom: 2.5rem;
+}
+
+.blog-section h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+  letter-spacing: -0.3px;
+}
+
+.blog-section h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-accent);
+}
+
+.blog-section p {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.75rem;
+  line-height: 1.8;
+}
+
+.blog-section ul {
+  padding-left: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.blog-section li {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.8;
+  margin-bottom: 0.5rem;
+  list-style: disc;
+}
+
+.blog-section li strong {
+  color: var(--color-text);
+}
+
+.blog-section code {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+  color: var(--color-accent);
+}
+
+.blog-callout {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.blog-callout h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  margin-bottom: 0.5rem;
+}
+
+.blog-callout p {
+  margin-bottom: 0;
+}
+
+.blog-footer {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-border);
+}

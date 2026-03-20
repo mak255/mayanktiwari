@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Service Mesh & Registry Ecosystem — Mayank</title>
+  <meta name="description" content="Deep dive into building a custom service mesh, Envoy control plane, and AuthZ service from scratch for mixed VM and Kubernetes environments." />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- ==================== NAVBAR ==================== -->
+  <nav id="navbar" class="navbar scrolled">
+    <div class="container nav-container">
+      <a href="../index.html" class="logo">&lt;mayank /&gt;</a>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="hamburger"></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ==================== ARTICLE ==================== -->
+  <article class="blog-article">
+    <div class="container">
+
+      <header class="blog-header">
+        <a href="../index.html#projects" class="blog-back">← Back to Projects</a>
+        <h1>Custom Service Mesh &amp; Registry Ecosystem</h1>
+        <div class="blog-meta">
+          <span class="blog-meta-item">📅 2017 – 2021</span>
+          <span class="blog-meta-item">👤 DevOps Engineer &amp; Infrastructure Developer</span>
+        </div>
+        <div class="project-tags">
+          <span>Go</span><span>Envoy</span><span>etcd</span><span>gRPC</span><span>Redis</span><span>Kubernetes</span><span>Contour</span>
+        </div>
+      </header>
+
+      <!-- The Challenge -->
+      <section class="blog-section">
+        <h2>The Challenge</h2>
+        <p>
+          During the early days of container orchestration, our organization began migrating services from legacy Virtual Machines directly to Kubernetes, bypassing Docker Swarm. At the time, adopting an off-the-shelf service mesh like Istio wasn't feasible because it lacked mature, first-class support for mixed environments spanning VMs and Swarm clusters. To bridge this gap, we architected and developed a custom service registry and mesh ecosystem tailored to our heterogeneous infrastructure.
+        </p>
+      </section>
+
+      <!-- Core Components -->
+      <section class="blog-section">
+        <h2>Core Components Developed</h2>
+        <p>Our custom stack consisted of three primary components that seamlessly integrated to provide routing, discovery, and security:</p>
+
+        <h3>1. Service Registry</h3>
+        <p>A centralized registry designed for developers to declare their service dependencies.</p>
+        <ul>
+          <li><strong>Architecture:</strong> Backed by a highly available <code>etcd</code> cluster deployed on VMs, with a lightweight Go wrapper providing a RESTful API.</li>
+          <li><strong>Developer Experience:</strong> We built a UI using Go HTTP templates, allowing engineers (regardless of API expertise) to easily register their services via a simple web form.</li>
+          <li><strong>Dependency Mapping:</strong> An essential feature of our schema required developers to explicitly list downstream services their application would call, dynamically mapping the microservices topology.</li>
+        </ul>
+
+        <h3>2. Envoy Control Plane</h3>
+        <p>The "brain" of our service mesh, engineered entirely in Go.</p>
+        <ul>
+          <li><strong>Dynamic Configuration:</strong> Instead of routing through the registry's wrapper, the control plane connected directly to <code>etcd</code>. By leveraging <code>etcd</code> watchers, the control plane received real-time configuration signals whenever a service definition changed.</li>
+          <li><strong>Automated Syncing:</strong> It dynamically generated and pushed configurations (listeners, clusters, HTTP routes, external AuthZ/JWT filters) to the distributed Envoy sidecars.</li>
+          <li><strong>Self-Healing:</strong> Envoy sidecars continuously polled the control plane, fetching pushed updates instantly without manual intervention.</li>
+        </ul>
+
+        <h3>3. Authentication &amp; Authorization Service (AuthZ)</h3>
+        <p>A secure gateway for validating external and internal microservice traffic. Transitioning this component marked a significant personal milestone: it was my first foray into software engineering, transitioning from a pure DevOps role.</p>
+        <ul>
+          <li><strong>Evolution:</strong> Started as a lightweight Node.js HTTP service meant to generate JWTs. It was later re-architected into a highly performant <strong>Golang gRPC service</strong> adhering strictly to Envoy's External Authorization (<code>ext_authz</code>) protocol.</li>
+          <li><strong>Security &amp; Encryption:</strong> Utilized asymmetric RSA encryption for secure token generation and validation.</li>
+          <li><strong>Performance Optimization:</strong> Token generation is compute-heavy. We deployed a Redis cache alongside the Go service. If a 15-minute token was requested, it was cached with a 14.5-minute TTL, drastically reducing internal latency and compute overhead.</li>
+          <li><strong>Ingress Integration:</strong> At the network edge, we utilized <strong>Contour</strong> as our Ingress controller integrated with Cloudflare Access. Contour delegated internet-facing requests to our AuthZ service to cryptographically validate Cloudflare tokens before traffic ever entered the internal mesh.</li>
+        </ul>
+      </section>
+
+      <!-- Traffic Flow -->
+      <section class="blog-section">
+        <h2>Traffic Flow &amp; Features</h2>
+        <p>Our service mesh established a zero-trust architecture across all environments:</p>
+
+        <div class="blog-callout">
+          <h4>External Traffic (North-South)</h4>
+          <p>External internet requests hit <strong>Contour Ingress</strong> → forwarded to the <strong>AuthZ service</strong> → validates the Cloudflare token → routes to the appropriate service.</p>
+        </div>
+
+        <div class="blog-callout">
+          <h4>Internal Traffic (East-West)</h4>
+          <p>Service A initiates a call → its <strong>Envoy sidecar</strong> intercepts and queries the AuthZ service → AuthZ generates (or retrieves from Redis) a secure JWT and returns it → Service A's sidecar injects the JWT header → Service B's sidecar validates the JWT → request is fulfilled by Service B.</p>
+        </div>
+      </section>
+
+      <!-- Key Learnings -->
+      <section class="blog-section">
+        <h2>Key Learnings &amp; Takeaways</h2>
+        <ul>
+          <li><strong>Transition to Software Engineering:</strong> Successfully bridged the gap from classical DevOps to writing robust systems programming in Go and Node.js.</li>
+          <li><strong>Distributed Systems Mastery:</strong> Gained deep operational and architectural knowledge of Envoy proxy configurations, <code>etcd</code> consensus/watchers, and gRPC protocols.</li>
+          <li><strong>Performance &amp; Security at Scale:</strong> Learned how to effectively implement distributed caching strategies (Redis TTL mechanisms) to offset the compute costs of RSA asymmetric encryption in high-throughput microservices.</li>
+        </ul>
+      </section>
+
+      <footer class="blog-footer">
+        <a href="../index.html#projects" class="btn btn-outline">← Back to Projects</a>
+      </footer>
+
+    </div>
+  </article>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Mayank. Built with vanilla HTML, CSS &amp; JS.</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
