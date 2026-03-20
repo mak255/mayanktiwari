@@ -412,8 +412,20 @@ img {
 }
 
 .skill-icon {
-  font-size: 2rem;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: var(--color-accent-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent);
   margin-bottom: 1rem;
+  transition: background var(--transition);
+}
+
+.skill-category:hover .skill-icon {
+  background: rgba(0, 212, 170, 0.2);
 }
 
 .skill-category h3 {
@@ -526,8 +538,20 @@ img {
 }
 
 .project-icon {
-  font-size: 2rem;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: var(--color-accent-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent);
   margin-bottom: 1rem;
+  transition: background var(--transition);
+}
+
+.project-card:hover .project-icon {
+  background: rgba(0, 212, 170, 0.2);
 }
 
 .project-card h3 {

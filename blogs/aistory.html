@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evolving with AI: From Basic Chat to Multi-Agent Orchestration — Mayank</title>
+  <meta name="description" content="A DevOps engineer's journey from using AI as a search engine to orchestrating autonomous multi-agent workflows in enterprise codebases." />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- ==================== NAVBAR ==================== -->
+  <nav id="navbar" class="navbar scrolled">
+    <div class="container nav-container">
+      <a href="../index.html" class="logo">&lt;mayank /&gt;</a>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="hamburger"></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="../index.html#about">About</a></li>
+        <li><a href="../index.html#skills">Skills</a></li>
+        <li><a href="../index.html#experience">Experience</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ==================== ARTICLE ==================== -->
+  <article class="blog-article">
+    <div class="container">
+
+      <header class="blog-header">
+        <a href="../index.html#projects" class="blog-back">← Back to Projects</a>
+        <h1>Evolving with AI: From Basic Chat to Custom Multi-Agent Orchestration</h1>
+        <div class="blog-meta">
+          <span class="blog-meta-item">👤 DevOps Engineer &amp; AI Practitioner</span>
+        </div>
+        <div class="project-tags">
+          <span>AI Agents</span><span>LLM</span><span>GitHub Copilot</span><span>Prompt Engineering</span><span>VS Code</span><span>Multi-Agent</span>
+        </div>
+      </header>
+
+      <!-- Intro -->
+      <section class="blog-section">
+        <p>
+          When the generative AI wave hit in late 2022, the tech industry was flooded with hype, disruption, and — frankly — a bit of anxiety. Like many engineers, I initially wondered how AI would impact my role as a DevOps Engineer. But instead of shying away from it, I leaned in.
+        </p>
+        <p>
+          What follows is my journey of AI adoption: a progression from using AI as a glorified search engine to independently orchestrating autonomous, multi-agent workflows in enterprise codebases. My hope is that sharing this evolution will help you bypass the early hurdles and start utilizing AI as a true, predictable engineering partner.
+        </p>
+      </section>
+
+      <!-- Phase 1 -->
+      <section class="blog-section">
+        <h2>Phase 1: The Upgraded Search Engine</h2>
+        <p>
+          My journey started where most do: basic chatbots. Initially, ChatGPT served as a replacement for standard web searches. Instead of spending hours trawling through forums and documentation to solve a problem or research a topic, I could ask a direct question and get an immediate, contextualized answer.
+        </p>
+        <p>
+          It was a huge time-saver. By skipping the tedious manual filtering of search results, I accelerated my daily research and information-gathering tasks significantly.
+        </p>
+      </section>
+
+      <!-- Phase 2 -->
+      <section class="blog-section">
+        <h2>Phase 2: Embracing the Coding Assistant</h2>
+        <p>
+          As a DevOps engineer, setting up infrastructure was my primary domain, but occasionally I needed to write scripts or small applications. When tools like GitHub Copilot gained popularity, I originally resisted relying on auto-completion. <em>If you are just learning to program, it is crucial to write code yourself to grasp the fundamentals.</em>
+        </p>
+        <p>
+          However, I eventually discovered AI's true value as an unblocker. Whenever I hit a wall where my current programming knowledge wasn't enough, I turned to AI for code snippets and examples. It acted as an on-demand mentor. As I integrated working solutions into my VS Code environment, I learned by doing — exponentially speeding up my transition from pure DevOps to system-level programming.
+        </p>
+      </section>
+
+      <!-- Phase 3 -->
+      <section class="blog-section">
+        <h2>Phase 3: The Epiphany of Boundaries (Next-Token Prediction)</h2>
+        <p>
+          As I moved from writing quick scripts to tackling enterprise-grade (brownfield) projects, I hit a bottleneck. Chatbots are excellent for greenfield projects (starting from scratch), but when I asked an AI agent to implement a feature in a mature codebase, the results were unpredictable. Depending on the model, or even the time of day, the AI would hallucinate or suggest code that violated our architecture.
+        </p>
+
+        <div class="blog-callout">
+          <h4>The Key Insight</h4>
+          <p>
+            Once I fundamentally understood that <strong>Large Language Models (LLMs) are essentially advanced next-token predictors</strong>, everything clicked. An LLM predicts the next word based on the context you provide. If you give it a vague prompt, it operates in an infinitely wide boundary, leading to generic or highly variable results. By providing context, constraints, and specific goals, you narrow that boundary.
+          </p>
+        </div>
+
+        <p>
+          I realized: <strong>To get production-ready, predictable outputs, I needed to strictly define the AI's operational boundaries.</strong>
+        </p>
+      </section>
+
+      <!-- Phase 4 -->
+      <section class="blog-section">
+        <h2>Phase 4: Mastering Reusable Prompts</h2>
+        <p>
+          Writing highly descriptive, context-rich prompts manually every time is tedious. The turning point was discovering reusable workspace prompts.
+        </p>
+        <p>
+          In VS Code, by creating a <code>.github/prompts/</code> directory, I could template my instructions. For example, I created a <code>python.prompts.md</code> file detailing that the AI should act as a Principal Python Engineer, strictly follow PEP8, prefer pure functions for testability, and favor composition over inheritance.
+        </p>
+        <p>
+          From then on, all I had to do was type <code>/python</code> in Copilot Chat, followed by a simple instruction like "Create a JSON parser." The AI automatically inherited my exact engineering standards.
+        </p>
+
+        <div class="blog-callout">
+          <h4>Taking It Further: Templating</h4>
+          <p>
+            I created parameterized prompts for repetitive refactoring, such as changing code casing. I created a prompt file where the source and target cases were variables. In chat, I could simply type: <code>/change_case convert snake_case to camelCase in config.yaml</code>. Writing one generic prompt with dynamic inputs made my workflow infinitely scalable.
+          </p>
+        </div>
+      </section>
+
+      <!-- Phase 5 -->
+      <section class="blog-section">
+        <h2>Phase 5: Global Guardrails via <code>copilot-instructions.md</code></h2>
+        <p>
+          Not every question requires a specialized prompt, but you <em>always</em> want the AI to understand your project's baseline context.
+        </p>
+        <p>
+          To solve this, I adopted the <code>.github/copilot-instructions.md</code> file. In this single file, you define the global guardrails for your repository: the primary language, the architecture patterns, the location of documentation, and specific folder structures.
+        </p>
+        <p>
+          Now, every single interaction you have with Copilot — whether using a specialized prompt, generating an inline edit, or just asking a quick chat question — carries this file's context. By simply having this file in your repository, you guarantee the AI acts consistently across your entire team.
+        </p>
+      </section>
+
+      <!-- Phase 6 -->
+      <section class="blog-section">
+        <h2>Phase 6: Multi-Agent Orchestration</h2>
+        <p>
+          The absolute pinnacle of my AI journey has been implementing <strong>Custom Agents</strong>. Instead of executing tasks linearly and waiting for the AI to finish one step before asking it to do another, I structured my workflow using specialized AI personas defined via <code>.github/agents/</code> files.
+        </p>
+        <p>Here is the pipeline I orchestrated:</p>
+
+        <div class="blog-callout">
+          <h4>1. Planner Agent</h4>
+          <p>Uses an advanced reasoning model (like Gemini 1.5 Pro). Given a feature request, its sole job is to write a highly detailed implementation plan and save it as a Markdown file in a <code>/plans</code> directory.</p>
+        </div>
+
+        <div class="blog-callout">
+          <h4>2. Coder Agent</h4>
+          <p>Configured to run on a fast coding model. It is instructed to read the plan generated by the Planner Agent, execute the code changes exactly as written, and ask clarifying questions instead of making assumptions.</p>
+        </div>
+
+        <div class="blog-callout">
+          <h4>3. Reviewer Agent</h4>
+          <p>Operates on a fresh context window to avoid bias. It reviews the committed code against best practices and generates a review report.</p>
+        </div>
+
+        <div class="blog-callout">
+          <h4>4. The Orchestrator</h4>
+          <p>The "Manager" agent. When triggered, it takes a feature request, autonomously triggers the Planner, hands the output to the Coder, and finally calls the Reviewer — handling the end-to-end development cycle.</p>
+        </div>
+      </section>
+
+      <!-- Pro Tips -->
+      <section class="blog-section">
+        <h2>Pro-Tips for AI Power Users</h2>
+        <ul>
+          <li><strong>Meta-Prompting (Make the AI Write the Prompts):</strong> Don't write your prompt and agent files entirely from scratch. Write a quick, messy draft, feed it to an LLM, and ask: <em>"Refine this prompt to be more specific, precise, and token-efficient."</em> Let the AI optimize its own instructions.</li>
+          <li><strong>Leverage Audio (Wispr Flow):</strong> Building intricate prompts means a lot of writing. I use Wispr Flow (a highly accurate dictation tool) to speak my naturally complex thoughts, which drastically accelerates prompt generation.</li>
+          <li><strong>Utilize "Gems" / Custom Personas:</strong> If you use web interfaces like Gemini, heavily lean into creating "Gems" (custom, pre-prompted personas). Let the tool auto-refine your instruction set, ensuring your web chats are just as bounded and predictable as your IDE workflows.</li>
+        </ul>
+      </section>
+
+      <!-- Conclusion -->
+      <section class="blog-section">
+        <h2>Conclusion</h2>
+        <p>
+          Over the last few years, I've gone from asking simple questions to managing a localized team of AI agents directly within my codebase. By understanding LLM boundaries and leaning into automated workflows, AI transformed from a slightly unpredictable text generator into a precise, reliable extension of my engineering capabilities.
+        </p>
+        <p>
+          If you take one thing away: <strong>Stop treating AI like a magic 8-ball.</strong> Treat it like a junior engineer. Give it explicit boundaries, detailed instructions, and review processes. When you do, the results will speak for themselves.
+        </p>
+        <p><em>(Next on my radar: Exploring Claude Code to see how its agentic CLI features compare to my current setup!)</em></p>
+      </section>
+
+      <footer class="blog-footer">
+        <a href="../index.html#projects" class="btn btn-outline">← Back to Projects</a>
+      </footer>
+
+    </div>
+  </article>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Mayank. Built with vanilla HTML, CSS &amp; JS.</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
